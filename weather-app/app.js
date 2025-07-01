@@ -8,14 +8,14 @@ if (!location){
     console.log('Please provide a location.');
 }
 else{
-    geocode(location, (error, geodetails)=>{
+    geocode(location, (error, { latitude, longitude, name } = {} )=>{
     if (error){
         console.log(chalk.red.inverse(error));
     }
     else{
-        console.log(geodetails.name + ' is found at: ' + geodetails.latitude + ', ' + geodetails.longitude);
+        console.log(name + ' is found at: ' + latitude + ', ' + longitude);
         
-        forecast(geodetails.latitude, geodetails.longitude, (error, weatherData)=>{
+        forecast(latitude, longitude, (error, weatherData)=>{
             if (error){
                 console.log(chalk.red.inverse(error));                
             }

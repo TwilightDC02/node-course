@@ -1,19 +1,19 @@
 const request = require('postman-request');
 
 const forecast = (latitude, longitude, callback) =>{
-    const weatherURL = 'http://api.weatherstack.com/current?access_key=8b448066a3816b74aec4796512ee14f3&query='+encodeURIComponent(latitude)+','+encodeURIComponent(longitude);
+    const url = 'http://api.weatherstack.com/current?access_key=8b448066a3816b74aec4796512ee14f3&query='+encodeURIComponent(latitude)+','+encodeURIComponent(longitude);
 
-    request({url: weatherURL, json: true}, (error, response)=>{
+    request({url, json: true}, (error, { body })=>{
         if (error){
             callback('API error.');
         }
-        else if (response.body.error){
+        else if (body.error){
             callback('Invalid query, please check coordinates given.');   
         }
         else{
             callback(undefined, {
-                time: response.body.current.observation_time,
-                temperature: response.body.current.temperature
+                time: body.current.observation_time,
+                temperature: body.current.temperature
             });
         }
     })
